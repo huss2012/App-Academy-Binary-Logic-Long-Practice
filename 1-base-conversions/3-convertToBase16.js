@@ -4,6 +4,44 @@
 
 const convertToBase16 = element => {
   // Your code here
+  let hex = '';
+  const values = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'];
+
+  if (typeof element === 'string' && element.includes('0b')) {
+    const algarisms = ['0000', '0001', '0010', '0011', '0100', '0101', '0110', '0111', '1000', '1001', '1010', '1011', '1100', '1101', '1110', '1111'];
+    const number = element.slice(2);
+
+    for (let i = number.length - 1; i >= 3; i -= 4) {
+      let bitsGroup = number.slice(i - 3, i + 1);
+
+      while (bitsGroup.length < 4) {
+        bitsGroup = '0' + bitsGroup;
+      }
+
+      let index = algarisms.indexOf(bitsGroup);
+      hex = values[index] + hex;
+    }
+  } else {
+    let decimal = element;
+    let power = 0;
+
+    while (Math.pow(16, power) <= decimal) {
+      power++;
+    }
+
+    for (let i = power - 1; i >= 0; i--) {
+      let j = 15
+
+      while (j * Math.pow(16, i) > decimal && j > 0) {
+        j--;
+      }
+
+      hex += `${values[j]}`;
+      decimal -= j * Math.pow(16, i);
+    }
+  }
+
+  return '0x' + hex;
 };
 
 /******************************************************************************/

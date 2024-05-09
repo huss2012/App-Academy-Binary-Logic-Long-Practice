@@ -4,6 +4,28 @@
 
 const convertToBase10 = str => {
   // Your code here
+
+  //1.Define a variable to holed the deciaml value
+  let deciaml = 0;
+
+  if (str.includes("0b")) {
+    let exponent = 0;
+    for (let i = str.length - 1; i >= 2; i--){
+      deciaml += str[i] * Math.pow(2, exponent);
+      exponent++;
+    }
+  } else {
+    let exponent = 0;
+    const letters = ["a", "b", "c", "d", "e", "f"];
+    const values = [10, 11, 12, 13, 14, 15];
+    for (let i = str.length - 1; i >= 2; i--){
+      let value = letters.includes(str[i]) ? values[letters.indexOf(str[i])] : str[i];
+      deciaml += value * Math.pow(16, exponent);
+      exponent++;
+    }
+  }
+
+  return deciaml;
 };
 
 /******************************************************************************/

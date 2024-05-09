@@ -4,6 +4,42 @@
 
 const convertToBase2 = element => {
   // Your code here
+  let binary = '0b';
+
+  if (typeof element === 'string' && element.includes('0x')) {
+    const digits = element.split('').slice(2);
+    const algarisms = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'];
+    const values = ['0', '1', '10', '11', '100', '101', '110', '111', '1000', '1001', '1010', '1011', '1100', '1101', '1110', '1111'];
+
+    for (let i = digits.length - 1; i >= 0; i--) {
+      let index = algarisms.indexOf(digits[i]);
+      digits[i] = values[index];
+
+      while (digits[i].length < 4 && i > 0) {
+        digits[i] = '0' + digits[i];
+      }
+    }
+
+    binary += digits.join('');
+  } else {
+    let decimal = element;
+    let digit = 0;
+
+    while (Math.pow(2, digit) < decimal) {
+      digit++;
+    }
+
+    for (let i = digit; i >= 0; i--) {
+      if (Math.pow(2, i) <= decimal) {
+        binary += '1';
+        decimal -= Math.pow(2, i);
+      } else if (i !== digit) {
+        binary += '0';
+      }
+    }
+  }
+
+  return binary;
 };
 
 /******************************************************************************/
